@@ -7,6 +7,7 @@ sources:
     #     url: https://tile.nextzen.org/tilezen/vector/v1/all/{z}/{x}/{y}.topojson
     _west_valley:
         type: GeoJSON
+#         url: https://raw.githubusercontent.com/burritojustice/saw-map/main/west_valley_osmto.geojson
         url: west_valley_osmto.geojson
 layers:
     west_valley:
@@ -25,7 +26,6 @@ layers:
                             stroke:
                                 color: black
                                 width: 3px
-                                
             suburb:
                 filter: {place: suburb,, $zoom: {min: 14}}
                 draw:
@@ -37,7 +37,25 @@ layers:
                             stroke:
                                 color: white
                                 width: 3px
-                                
+
+        _amenity:
+            filter: { amenity: true, $zoom: {min: 15} }
+            draw:
+                points:
+                    size: 12px
+                    color: red
+                    outline: 
+                        color: black
+                        width: 2px
+                    text:
+                        text_source: amenity
+                        font:
+                            size: 12px
+                            fill: yellow
+                            stroke:
+                                color: black
+                                width: 3px
+            
         _water:
             # enabled: false
             filter: { natural: water }
@@ -73,6 +91,18 @@ layers:
                         color: black
                         width: 1px
                         order: 4
+            labels:
+                filter: {$zoom: {min: 16}}
+                draw:
+                    text:
+                        text_source: landuse
+                        # collide: true
+                        font:
+                            size: 12px
+                            fill: yellow
+                            stroke:
+                                color: black
+                                width: 3px
                         
         _roads:
             filter: { highway: true }
@@ -185,6 +215,41 @@ layers:
                         order: 7
                         color: red
                         extrude: true
+            labels:
+                filter: {$zoom: {min: 16}}
+                draw:
+                    text:
+                        text_source: building
+                        # collide: true
+                        font:
+                            size: 12px
+                            fill: yellow
+                            stroke:
+                                color: black
+                                width: 3px
+                    _text2:
+                        collide: false
+                        text_source: |
+                            function(){
+                                    let emoji = ''
+                                    if (feature.building == 'retail')
+                                        {emoji = '💸'}
+                                    if (feature.building == 'industrial')
+                                        {emoji = '🏭'}
+                                    if (feature.building == 'commercial')
+                                        {emoji = '👨‍💻'}
+                                    if (feature.building == 'residential')
+                                        {emoji = '🏘'}
+                                    return emoji
+                                }
+                        # text_source: building
+                        font:
+                            size: 48px
+                            fill: yellow
+                            stroke:
+                                color: black
+                                width: 3px
+                
         _power:
             # data: { source: _west_valley }
             filter: {power: plant}
@@ -204,7 +269,8 @@ layers:
                         width: 3px
                     
         _unclassified:
-            enabled: false # for troubleshooting, no filter, so will draw everything 
+            # for troubleshooting, no filter, so will draw everything 
+            enabled: false 
             draw: #
                 lines: 
                     width: 1px
@@ -213,3 +279,27 @@ layers:
                     outline:
                         color: aqua
                         width: 1px
+                text:
+                    font:
+                        size: 12px
+                        fill: magenta
+                        stroke:
+                            color: darkblue
+                            width: 3px
+styles:
+    _polygons:
+        base: polygons
+        blend: inlay
+        blend_order: 0
+    _points:
+        base: points
+        blend: overlay
+        blend_order: 1
+    _text2:
+        base: text
+        blend: overlay
+        blend_order: 2
+    _text1:
+        base: text
+        blend: overlay
+        blend_order: 1
