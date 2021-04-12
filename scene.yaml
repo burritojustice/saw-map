@@ -8,7 +8,7 @@ sources:
     _west_valley:
         type: GeoJSON
 #         url: https://raw.githubusercontent.com/burritojustice/saw-map/main/west_valley_osmto.geojson
-        url: west_valley_osmto.geojson
+        url: west_valley_v2.geojson
 layers:
     west_valley:
         data: { source: _west_valley }
