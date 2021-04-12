@@ -257,6 +257,8 @@ layers:
                                         {emoji = '👨‍💻'}
                                     if (feature.building == 'residential')
                                         {emoji = '🏘'}
+                                    if (feature.building == 'train_station')
+                                        {emoji = '🚂'}
                                     return emoji
                                 }
                         # text_source: building
