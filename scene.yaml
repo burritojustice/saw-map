@@ -7,7 +7,7 @@ sources:
     #     url: https://tile.nextzen.org/tilezen/vector/v1/all/{z}/{x}/{y}.topojson
     _west_valley:
         type: GeoJSON
-        url: https://gist.githubusercontent.com/burritojustice/5c7e7bf019bdf59dfacbd54e859c8cb2/raw/0c84b8c2a3bc4c0b17e84c2ecf262e9d17cff82d/west_valley.geojson
+        url: west_valley.geojson
 layers:
     west_valley:
         data: { source: _west_valley }
