@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>My Web Map</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7/dist/leaflet.css" />
+    <style>
+      html, body { margin: 0; padding: 0; }
+      #map { height: 100%; width: 100%; position: absolute; }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script src="https://unpkg.com/leaflet@1.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/tangram/dist/tangram.min.js"></script>
+    <script>
+      var map = L.map('map');
+      var layer = Tangram.leafletLayer({
+        scene: 'scene.yaml',
+        attribution: '<a href="https://github.com/tangrams/tangram" target="_blank">Tangram</a> | <a href="https://www.nextzen.org/" target="_blank">Nextzen</a> | &copy; OSM contributors'
+      });
+      layer.addTo(map);
+      map.setView([34.4513, 35.8476], 15);
+//       map.setBounds()
+    </script>
+  </body>
+</html>
