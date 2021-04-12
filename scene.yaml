@@ -73,9 +73,9 @@ layers:
                 filter: 
                     any: 
                         - natural: water 
-                    not: 
-                        - id: way/129193
-                        - id: way/129057
+                    not: # these IDs are probably going to change on each export -- maybe give them a name? otherwise open the scene file in https://play.tangram.city/ to Inspect the features and grab the IDs 
+                        - id: way/129456
+                        - id: way/129336
                 draw:
                     polygons:
                         order: 2
