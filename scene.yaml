@@ -68,6 +68,23 @@ layers:
                     width: 1px
                     order: 3
                     
+            islands: 
+            # doesn't look like the OSM conversion tools know how to do interior polygons, so fake it by filtering out the ids of the big bodies and drawing islands manually
+                filter: 
+                    any: 
+                        - natural: water 
+                    not: 
+                        - id: way/129193
+                        - id: way/129057
+                draw:
+                    polygons:
+                        order: 2
+                        color: darkgreen
+                    lines:
+                        color: black
+                        width: 1px
+                        order: 3
+                    
         _earth:
             filter: {earth: true}
             draw:
