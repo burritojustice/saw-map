@@ -1,0 +1,159 @@
+scene:
+    background:
+        color: darkgreen
+sources:
+    # nextzen:
+    #     type: TopoJSON
+    #     url: https://tile.nextzen.org/tilezen/vector/v1/all/{z}/{x}/{y}.topojson
+    _west_valley:
+        type: GeoJSON
+        url: https://gist.githubusercontent.com/burritojustice/5c7e7bf019bdf59dfacbd54e859c8cb2/raw/0c84b8c2a3bc4c0b17e84c2ecf262e9d17cff82d/west_valley.geojson
+layers:
+    west_valley:
+        data: { source: _west_valley }
+
+        _water:
+            # enabled: false
+            filter: { natural: water }
+            draw:
+                polygons:
+                    order: 2
+                    color: darkblue
+                lines:
+                    color: black
+                    width: 1px
+                    order: 3
+        _earth:
+            filter: {earth: true}
+            draw:
+                polygons:
+                    order: 1
+                    color: yellow
+        _landuse:
+            filter: {landuse: true}
+            draw:
+                polygons:
+                    order: 3
+                    color: orange
+            recreation:
+                filter: {landuse: recreation_ground}
+                draw:
+                    polygons:
+                        order: 3
+                        color: lawngreen
+                    lines:
+                        color: black
+                        width: 1px
+                        order: 4
+        _roads:
+            filter: { highway: true }
+            draw:
+                lines:
+                    order: 4
+                    color: '#ffffff'
+                    width: [[7,0.0px], [10, .5px], [15, .75px], [17, 5m]]
+
+            link:
+                filter: { highway: secondary_link } # on- and off-ramps, etc
+                draw:
+                    lines:
+                        width: [[8,0px], [14, 1px], [16, 2px], [18, 3m]]
+                        color: white
+                        outline:
+                            color: black
+                            width: [[13,0px],[14, 2px]]
+
+            highway:
+                filter: {  highway: motorway }
+                draw:
+                    lines:
+                        color: lightgrey
+                        outline:
+                            color: black
+                            width: [[13,0px],[14, 2px]]
+                        order: 5
+                        width: [[8,0px], [9,.25px], [11, 1.5px], [14, 2px], [16, 4px], [17, 10m]]
+
+            tunnel:
+                filter: {is_tunnel: true }
+                draw:
+                    lines:
+                        order: 6
+        rail:
+            filter: {  railway: rail }
+            draw:
+                lines:
+                    dash: [3, 1]
+                    color: white
+                    # outline:
+                    #     color: [1,1,1]
+                    #     width: 2px
+                    order: 15
+                    width: [[8,0px], [8,.5px], [11, 1.5px], [14, 2px], [16, 4px], [17, 10m]]        
+        _building:
+            # enabled: false
+            filter: 
+                - building: true, 
+                - $zoom: {min: 14}
+            draw:
+                lines:
+                    order: 7
+                    color: black
+                    width: 2.5px
+                    extrude: true
+                polygons:
+                        order: 7
+                        color: white
+                        extrude: true
+            residential:
+                filter: {building: residential}
+                draw:
+                    polygons:
+                        order: 7
+                        color: orange
+                        extrude: true
+            commercial:
+                filter: {building: commercial}
+                draw:
+                    polygons:
+                        order: 7
+                        color: yellow
+                        extrude: true
+            retail:
+                filter: {building: retail}
+                draw:
+                    polygons:
+                        order: 7
+                        color: pink
+                        extrude: true
+            industrial:
+                filter: {building: industrial}
+                draw:
+                    polygons:
+                        order: 7
+                        color: darkgrey
+                        extrude: true
+            school:
+                filter: {building: school}
+                draw:
+                    polygons:
+                        order: 7
+                        color: red
+                        extrude: true
+        _power:
+            # data: { source: _west_valley }
+            filter: {power: plant}
+            draw:
+                polygons:
+                    order: 10
+                    color: red
+        _unclassified:
+            enabled: false
+            draw: #
+                lines: 
+                    width: 1px
+                    color: blue
+                    order: 100
+                    outline:
+                        color: aqua
+                        width: 1px
