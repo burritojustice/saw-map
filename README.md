@@ -9,7 +9,7 @@ To make a new layer, just make sure you filter it using a property and/or value.
 
 Not familiar with OSMtoGeoJSON but these seem like converstion artifacts:
 - highways look choppy
-- islands don't seem to be polygons
+- islands don't seem to be polygons -- either it doesn't know how to construct internal holes or the winding order is wrong
 
 ## Dependencies
 
