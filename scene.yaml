@@ -15,7 +15,7 @@ layers:
         _places:
             # enabled: false
             filter: { place: true }
-            _city:
+            city:
                 filter: {place: city}
                 draw:
                     text:
@@ -25,7 +25,8 @@ layers:
                             stroke:
                                 color: black
                                 width: 3px
-            _suburb:
+                                
+            suburb:
                 filter: {place: suburb,, $zoom: {min: 14}}
                 draw:
                     text:
@@ -36,6 +37,7 @@ layers:
                             stroke:
                                 color: white
                                 width: 3px
+                                
         _water:
             # enabled: false
             filter: { natural: water }
@@ -47,12 +49,14 @@ layers:
                     color: black
                     width: 1px
                     order: 3
+                    
         _earth:
             filter: {earth: true}
             draw:
                 polygons:
                     order: 1
                     color: yellow
+                    
         _landuse:
             filter: {landuse: true}
             draw:
@@ -69,6 +73,7 @@ layers:
                         color: black
                         width: 1px
                         order: 4
+                        
         _roads:
             filter: { highway: true }
             draw:
@@ -86,6 +91,13 @@ layers:
                         outline:
                             color: black
                             width: [[13,0px],[14, 2px]]
+                    text:
+                        font:
+                            size: 10px
+                            fill: black
+                            stroke:
+                                color: white
+                                width: 3px     
 
             highway:
                 filter: {  highway: motorway }
@@ -97,23 +109,32 @@ layers:
                             width: [[13,0px],[14, 2px]]
                         order: 5
                         width: [[8,0px], [9,.25px], [11, 1.5px], [14, 2px], [16, 4px], [17, 10m]]
+                    text:
+                        font:
+                            size: 12px
+                            fill: white
+                            stroke:
+                                color: black
+                                width: 3px                     
 
             tunnel:
                 filter: {is_tunnel: true }
                 draw:
                     lines:
                         order: 6
-        rail:
+                        
+        _rail:
             filter: {  railway: rail }
             draw:
                 lines:
                     dash: [3, 1]
-                    color: white
-                    # outline:
-                    #     color: [1,1,1]
-                    #     width: 2px
+                    color: yellow
+                    outline:
+                        color: [0,0,0]
+                        width: 2px
                     order: 15
                     width: [[8,0px], [8,.5px], [11, 1.5px], [14, 2px], [16, 4px], [17, 10m]]        
+                    
         _building:
             # enabled: false
             filter: 
@@ -171,8 +192,19 @@ layers:
                 polygons:
                     order: 10
                     color: red
+        _dam:
+            filter: {waterway: dam}
+            draw: 
+                lines: 
+                    width: 5px
+                    color: aqua
+                    order: 10
+                    outline:
+                        color: blue
+                        width: 3px
+                    
         _unclassified:
-            enabled: false
+            enabled: false # for troubleshooting, no filter, so will draw everything 
             draw: #
                 lines: 
                     width: 1px
