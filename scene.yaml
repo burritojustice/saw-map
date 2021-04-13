@@ -7,8 +7,8 @@ sources:
     #     url: https://tile.nextzen.org/tilezen/vector/v1/all/{z}/{x}/{y}.topojson
     _west_valley:
         type: GeoJSON
-#         url: https://raw.githubusercontent.com/burritojustice/saw-map/main/west_valley_osmto.geojson
-        url: west_valley_v2.geojson
+        url: https://raw.githubusercontent.com/burritojustice/saw-map/main/west_valley_v2.geojson
+        #url: west_valley_osmto.geojson
 layers:
     west_valley:
         data: { source: _west_valley }
@@ -57,23 +57,11 @@ layers:
                                 width: 3px
             
         _water:
-            # enabled: false
-            filter: { natural: water }
-            draw:
-                polygons:
-                    order: 2
-                    color: darkblue
-                lines:
-                    color: black
-                    width: 1px
-                    order: 3
-                    
-            islands: 
-            # doesn't look like the OSM conversion tools know how to do interior polygons, so fake it by filtering out the ids of the big bodies and drawing islands manually
+            filter: {natural: water}
+            islands:
+                # enabled: false
                 filter: 
-                    any: 
-                        - natural: water 
-                    not: # these IDs are probably going to change on each export -- maybe give them a name? otherwise open the scene file in https://play.tangram.city/ to Inspect the features and grab the IDs 
+                    not: 
                         - id: way/129456
                         - id: way/129336
                 draw:
@@ -84,6 +72,16 @@ layers:
                         color: black
                         width: 1px
                         order: 3
+            # enabled: false
+
+            draw:
+                polygons:
+                    order: 2
+                    color: darkblue
+                lines:
+                    color: black
+                    width: 1px
+                    order: 3
                     
         _earth:
             filter: {earth: true}
@@ -97,7 +95,11 @@ layers:
             draw:
                 polygons:
                     order: 3
-                    color: orange
+                    color: purple
+                lines:
+                    color: violet
+                    width: 1px
+                    order: 4
             recreation:
                 filter: {landuse: recreation_ground}
                 draw:
@@ -120,6 +122,7 @@ layers:
                             stroke:
                                 color: black
                                 width: 3px
+
                         
         _roads:
             filter: { highway: true }
@@ -185,13 +188,14 @@ layers:
         _building:
             # enabled: false
             filter: 
-                - building: true, 
-                - $zoom: {min: 14}
+                all:
+                    - building: true 
+                    - $zoom: {min: 14}
             draw:
                 lines:
-                    order: 7
+                    order: 8
                     color: black
-                    width: 2.5px
+                    width: 1px
                     extrude: true
                 polygons:
                         order: 7
@@ -230,20 +234,26 @@ layers:
                 draw:
                     polygons:
                         order: 7
-                        color: red
+                        color: brown
                         extrude: true
             labels:
                 filter: {$zoom: {min: 16}}
                 draw:
                     text:
-                        text_source: building
+                        text_source: |
+                            function(){
+                                if (feature.building != 'yes'){
+                                    return feature.building
+                                }
+                            }
+                        # text_source: building
                         # collide: true
                         font:
                             size: 12px
                             fill: yellow
                             stroke:
                                 color: black
-                                width: 3px
+
                     _text2:
                         collide: false
                         text_source: |
@@ -270,12 +280,22 @@ layers:
                                 width: 3px
                 
         _power:
-            # data: { source: _west_valley }
             filter: {power: plant}
             draw:
                 polygons:
                     order: 10
                     color: red
+                    extrude: 50
+                lines:
+                    order: 11
+                    width: 1px
+                    color: darkred
+                    extrude: 50
+                text:
+                    font:
+                        size: 24px
+                    text_source: function(){return '⚡️'}
+                    repeat_distance: 128
         _dam:
             filter: {waterway: dam}
             draw: 
@@ -305,6 +325,7 @@ layers:
                         stroke:
                             color: darkblue
                             width: 3px
+
 styles:
     _polygons:
         base: polygons
